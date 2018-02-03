@@ -9,6 +9,8 @@ namespace TheSalesTracker
 {
     /// <summary>
     /// console utility class
+    /// This class provided by John Velis, NMC Instructor
+    /// Adapted to include overloaded methods for right-padding text 
     /// </summary>
     public static class ConsoleUtil
     {

@@ -4,8 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
+
 namespace TheSalesTracker
 {
+    /// <summary>
+    /// This class provided by John Velis, NMC Instructor
+    /// Adapted to include methods for validating "Y/N" responses
+    /// </summary>
     public static class ConsoleValidator
     {
         /// <summary>
