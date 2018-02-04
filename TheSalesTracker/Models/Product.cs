@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace TheSalesTracker
 {
+    /// <summary>
+    /// Product MVC Model class
+    /// </summary>
     public class Product
     {
         #region FIELDS

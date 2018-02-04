@@ -78,6 +78,7 @@ namespace TheSalesTracker
             //
             _salesperson = _consoleView.DisplaySetupAccount();
 
+            _salesperson.CurrentStock.Type = _consoleView.DisplayProductUserSelection();
             //
             //
             // application loop

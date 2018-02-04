@@ -165,7 +165,77 @@ namespace TheSalesTracker
             salesperson.CitiesVisited.Add(Console.ReadLine());
 
 
+
             return salesperson;
+        }
+
+        /// <summary>
+        /// display a list of product types and return the selected product type
+        /// </summary>
+        public Product.ProductType DisplayProductUserSelection()
+        {
+            bool usingMenu = true;
+
+            Product.ProductType productType = new Product.ProductType();
+
+            productType = Product.ProductType.None;
+
+            //
+            // set up display area
+            //
+            ConsoleUtil.DisplayReset();
+            ConsoleUtil.HeaderText = "Select a Product";
+            Console.CursorVisible = false;
+
+            //
+            // display the menu
+            //
+            ConsoleUtil.DisplayMessage("Please type the number of your menu choice.");
+            ConsoleUtil.DisplayMessage("");
+            Console.Write(
+                "\t" + "1. None" + Environment.NewLine +
+                "\t" + "2. Furry" + Environment.NewLine +
+                "\t" + "3. Spotted" + Environment.NewLine +
+                "\t" + "4. Dancing" + Environment.NewLine);
+
+            //
+            // get and process the user's response
+            // note: ReadKey argument set to "true" disables the echoing of the key press
+            //
+            ConsoleKeyInfo userResponse = Console.ReadKey(true);
+            switch (userResponse.KeyChar)
+            {
+                case '1':
+                    productType = Product.ProductType.None;
+                    usingMenu = false;
+                    break;
+                case '2':
+                    productType = Product.ProductType.Furry;
+                    usingMenu = false;
+                    break;
+                case '3':
+                    productType = Product.ProductType.Spotted;
+                    usingMenu = false;
+                    break;
+                case '4':
+                    productType = Product.ProductType.Dancing;
+                    usingMenu = false;
+                    break;
+                default:
+                    ConsoleUtil.DisplayMessage(
+                        "It appears you have selected an incorrect choice." + Environment.NewLine +
+                        "Press any key to continue.");
+
+                    userResponse = Console.ReadKey(true);
+                    if (userResponse.Key == ConsoleKey.Escape)
+                    {
+                        usingMenu = false;
+                    }
+                    break;
+            }
+    
+            Console.CursorVisible = true;
+            return productType;
         }
 
         /// <summary>
@@ -187,6 +257,8 @@ namespace TheSalesTracker
         /// </summary>
         public MenuOption DisplayGetUserMenuChoice()
         {
+            ConsoleUtil.HeaderText = "Main Menu";
+
             MenuOption userMenuChoice = MenuOption.None;
             bool usingMenu = true;
 
