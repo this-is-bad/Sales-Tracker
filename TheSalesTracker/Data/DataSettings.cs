@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace TheSalesTracker.Data
+namespace TheSalesTracker
 {
-    class DataSettings
+    public static class DataSettings
     {
-        //public const string _dataFilePathCsv = "Data\\Data.txt";
+        public const string dataFilePathCsv = "Data\\Data.txt";
         public const string dataFilePathXml = "Data\\Data.xml";
     }
 }

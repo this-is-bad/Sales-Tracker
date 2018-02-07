@@ -43,6 +43,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\Controller.cs" />
+    <Compile Include="DataAccessLayer\XmlServices.cs" />
+    <Compile Include="DataAccessLayer\CsvServices.cs" />
+    <Compile Include="Data\InitializeDataFile.cs" />
+    <Compile Include="Data\InitializeDataFileXml.cs" />
+    <Compile Include="Data\InitializeDataFileCsv.cs" />
     <Compile Include="Data\DataSettings.cs" />
     <Compile Include="Models\class_template.cs" />
     <Compile Include="Models\MenuOption.cs" />
@@ -57,9 +62,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DataAccessLayer\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Data\Data.txt" />
     <Content Include="Data\Data.xml" />
