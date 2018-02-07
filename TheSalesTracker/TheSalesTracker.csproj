@@ -64,7 +64,6 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="Data\Data.txt" />
     <Content Include="Data\Data.xml" />
     <Content Include="readme.txt" />
   </ItemGroup>

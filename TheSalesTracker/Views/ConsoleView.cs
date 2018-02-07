@@ -45,11 +45,16 @@ namespace TheSalesTracker
             ConsoleUtil.HeaderText = "Account Info";
             ConsoleUtil.DisplayReset();
 
+            DisplayAccountDetail(salesperson);
+
+            DisplayContinuePrompt();
+        }
+
+        public void DisplayAccountDetail(Salesperson salesperson)
+        {
             ConsoleUtil.DisplayMessage("First Name: " + salesperson.FirstName);
             ConsoleUtil.DisplayMessage("Last Name: " + salesperson.LastName);
             ConsoleUtil.DisplayMessage("Account ID: " + salesperson.AccountID);
-
-            DisplayContinuePrompt();
         }
 
         /// <summary>
@@ -491,6 +496,130 @@ namespace TheSalesTracker
                 ConsoleUtil.DisplayMessage(city);
             } 
             DisplayContinuePrompt();
+        }
+
+        /// <summary>
+        /// display confirmation that a salesperson account was successfully loaded
+        /// </summary>
+        public void DisplayConfirmLoadAccountInfo(Salesperson salesperson)
+        {
+            ConsoleUtil.HeaderText = "Load Account";
+            ConsoleUtil.DisplayReset();
+
+            ConsoleUtil.DisplayMessage("Account information loaded");
+
+            DisplayAccountDetail(salesperson);
+
+            DisplayContinuePrompt();
+        }
+
+        /// <summary>
+        /// display confirmation that a salesperson account was successfully loaded
+        /// </summary>
+        public void DisplayConfirmSaveAccountInfo()
+        {
+            ConsoleUtil.HeaderText = "Save Account";
+            ConsoleUtil.DisplayReset();
+
+            ConsoleUtil.DisplayMessage("Account information saved");
+
+            DisplayContinuePrompt();
+        }
+
+        /// <summary>
+        /// display confirmation that a salesperson account was successfully loaded
+        /// </summary>
+        public bool DisplayLoadAccountInfo(Salesperson salesperson, out bool maxAttemptsExceeded)
+        {
+            string userResponse;
+            maxAttemptsExceeded = false;
+
+            ConsoleUtil.HeaderText = "Load Account";
+            ConsoleUtil.DisplayReset();
+
+            ConsoleUtil.DisplayMessage("");
+            userResponse = ConsoleValidator.GetYesNoFromUser(MAXIMUM_ATTEMPTS, 
+                "Load the account information?", out maxAttemptsExceeded);
+
+            if (maxAttemptsExceeded)
+            {
+                ConsoleUtil.DisplayMessage("It appears you are having difficulty.  You will " +
+                         "return to the main menu.");
+                return false;
+
+            }
+            else
+            {
+                //
+                // note use of ternary operator
+                //
+                return userResponse == "YES" ? true : false;
+            }
+        }
+
+        /// <summary>
+        /// display confirmation that a salesperson account was successfully loaded
+        /// </summary>
+        public bool DisplayLoadAccountInfo(out bool maxAttemptsExceeded)
+        {
+            string userResponse;
+            maxAttemptsExceeded = false;
+
+            ConsoleUtil.HeaderText = "Load Account";
+            ConsoleUtil.DisplayReset();
+
+            ConsoleUtil.DisplayMessage("");
+            userResponse = ConsoleValidator.GetYesNoFromUser(MAXIMUM_ATTEMPTS,
+                "Load the account information?", out maxAttemptsExceeded);
+
+            if (maxAttemptsExceeded)
+            {
+                ConsoleUtil.DisplayMessage("It appears you are having difficulty.  You will " +
+                         "return to the main menu.");
+                return false;
+
+            }
+            else
+            {
+                //
+                // note use of ternary operator
+                //
+                return userResponse == "YES" ? true : false;
+            }
+        }
+
+        /// <summary>
+        /// display confirmation that a salesperson account was successfully loaded
+        /// </summary>
+        public bool DisplaySaveAccountInfo(Salesperson salesperson, out bool maxAttemptsExceeded)
+        {
+            string userResponse;
+            maxAttemptsExceeded = false;
+
+            ConsoleUtil.HeaderText = "Save Account";
+            ConsoleUtil.DisplayReset();
+
+            ConsoleUtil.DisplayMessage("The current account information.");
+            DisplayAccountDetail(salesperson);
+
+            ConsoleUtil.DisplayMessage("");
+            userResponse = ConsoleValidator.GetYesNoFromUser(MAXIMUM_ATTEMPTS,
+                "Save the account information?", out maxAttemptsExceeded);
+
+            if (maxAttemptsExceeded)
+            {
+                ConsoleUtil.DisplayMessage("It appears you are having difficulty.  You will " +
+                         "return to the main menu.");
+                return false;
+
+            }
+            else
+            {
+                //
+                // note use of ternary operator
+                //
+                return userResponse.ToUpper() == "YES" ? true : false;
+            }
         }
 
         /// <summary>
