@@ -31,7 +31,9 @@ namespace TheSalesTracker
         #endregion
 
         #region CONSTRUCTORS
-
+        /// <summary>
+        /// constructor for the controller class
+        /// </summary>
         public Controller()
         {
             InitializeController();
@@ -72,9 +74,7 @@ namespace TheSalesTracker
             MenuOption userMenuChoice;
 
             _consoleView.DisplayWelcomeScreen();
-
-
-            _salesperson.CurrentStock.Type = _consoleView.DisplayProductUserSelection();
+            
             //
             //
             // application loop
@@ -98,6 +98,11 @@ namespace TheSalesTracker
                     case MenuOption.SetupAccount:
                         {
                             SetupAccount();
+                            break;
+                        }
+                    case MenuOption.SetupProduct:
+                        {
+                            SetupProduct();
                             break;
                         }
                     case MenuOption.Travel:
@@ -163,6 +168,15 @@ namespace TheSalesTracker
         private void SetupAccount()
         {
             _salesperson = _consoleView.DisplaySetupAccount();
+        }
+        
+        /// <summary>
+        /// setup the product
+        /// </summary>
+        private void SetupProduct()
+        {
+            Product product = _consoleView.DisplayProductUserSelection();
+            _salesperson.CurrentStock = product;
         }
 
         /// <summary>

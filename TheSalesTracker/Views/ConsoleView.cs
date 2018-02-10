@@ -50,6 +50,10 @@ namespace TheSalesTracker
             DisplayContinuePrompt();
         }
 
+        /// <summary>
+        ///  display the salesperson account details
+        /// </summary>
+        /// <param name="salesperson"></param>
         public void DisplayAccountDetail(Salesperson salesperson)
         {
             ConsoleUtil.DisplayMessage("First Name: " + salesperson.FirstName);
@@ -115,7 +119,6 @@ namespace TheSalesTracker
             }
         }
 
-
         /// <summary>
         /// display the welcome screen
         /// </summary>
@@ -124,6 +127,8 @@ namespace TheSalesTracker
             StringBuilder sb = new StringBuilder();
 
             ConsoleUtil.DisplayReset();
+
+            Console.Clear();
 
             ConsoleUtil.DisplayMessage("Written by Shayne Jones");
             ConsoleUtil.DisplayMessage("Northwestern Michigan College");
@@ -153,33 +158,77 @@ namespace TheSalesTracker
         public Salesperson DisplaySetupAccount()
         {
             Salesperson salesperson = new Salesperson();
-            
+            int maxAttempts = 3;
+            string firstName;
+            string lastName;
+            string accountId;
+            string city;
+            bool maxAttemptsExceeded = false;
+
             ConsoleUtil.HeaderText = "Account Setup";
             ConsoleUtil.DisplayReset();
 
-            ConsoleUtil.DisplayPromptMessage("First Name:");
-            salesperson.FirstName = Console.ReadLine();
+            firstName = ConsoleValidator.TestForEmpty(maxAttempts, "First Name:", out maxAttemptsExceeded);
+            
+            if (!string.IsNullOrEmpty(firstName))
+            {
+                salesperson.FirstName = firstName;
+                maxAttemptsExceeded = false;
+            }
+            else
+            {
+                return salesperson;
+            }
 
-            ConsoleUtil.DisplayPromptMessage("Last Name:", 2);
-            salesperson.LastName = Console.ReadLine();
+            lastName = ConsoleValidator.TestForEmpty(maxAttempts, "Last Name:", out maxAttemptsExceeded);
 
-            ConsoleUtil.DisplayPromptMessage("Account ID:");
-            salesperson.AccountID = Console.ReadLine();
+            if (!string.IsNullOrEmpty(lastName))
+            {
+                salesperson.LastName = lastName;
+                maxAttemptsExceeded = false;
+            }
+            else
+            {
+                return salesperson;
+            }
 
-            ConsoleUtil.DisplayPromptMessage("City: ");
-            salesperson.CitiesVisited.Add(Console.ReadLine());
+            accountId = ConsoleValidator.TestForEmpty(maxAttempts, "Account ID:", out maxAttemptsExceeded);
 
+            if (!string.IsNullOrEmpty(accountId))
+            {
+                salesperson.AccountID =  accountId;
+                maxAttemptsExceeded = false;
+            }
+            else
+            {
+                return salesperson;
+            }
 
+            city = ConsoleValidator.TestForEmpty(maxAttempts, "City:", out maxAttemptsExceeded);
+
+            if (!string.IsNullOrEmpty(city))
+            {
+                salesperson.CitiesVisited.Add(city);
+                maxAttemptsExceeded = false;
+            }
+            else
+            {
+                return salesperson;
+            }
 
             return salesperson;
         }
 
         /// <summary>
-        /// display a list of product types and return the selected product type
+        /// display a list of product types and return the selected product with cost
         /// </summary>
-        public Product.ProductType DisplayProductUserSelection()
+        public Product DisplayProductUserSelection()
         {
             bool usingMenu = true;
+            int maxAttempts = 3;
+            bool maxAttemptsExceeded = false;
+            
+            Product product = new Product();
 
             Product.ProductType productType = new Product.ProductType();
 
@@ -192,55 +241,65 @@ namespace TheSalesTracker
             ConsoleUtil.HeaderText = "Select a Product";
             Console.CursorVisible = false;
 
-            //
-            // display the menu
-            //
-            ConsoleUtil.DisplayMessage("Please type the number of your menu choice.");
-            ConsoleUtil.DisplayMessage("");
-            Console.Write(
-                "\t" + "1. None" + Environment.NewLine +
-                "\t" + "2. Furry" + Environment.NewLine +
-                "\t" + "3. Spotted" + Environment.NewLine +
-                "\t" + "4. Dancing" + Environment.NewLine);
-
-            //
-            // get and process the user's response
-            // note: ReadKey argument set to "true" disables the echoing of the key press
-            //
-            ConsoleKeyInfo userResponse = Console.ReadKey(true);
-            switch (userResponse.KeyChar)
+            while (usingMenu)
             {
-                case '1':
-                    productType = Product.ProductType.None;
-                    usingMenu = false;
-                    break;
-                case '2':
-                    productType = Product.ProductType.Furry;
-                    usingMenu = false;
-                    break;
-                case '3':
-                    productType = Product.ProductType.Spotted;
-                    usingMenu = false;
-                    break;
-                case '4':
-                    productType = Product.ProductType.Dancing;
-                    usingMenu = false;
-                    break;
-                default:
-                    ConsoleUtil.DisplayMessage(
-                        "It appears you have selected an incorrect choice." + Environment.NewLine +
-                        "Press any key to continue.");
+                //
+                // set up display area
+                //
+                ConsoleUtil.DisplayReset();
+                Console.CursorVisible = false;
 
-                    userResponse = Console.ReadKey(true);
-                    if (userResponse.Key == ConsoleKey.Escape)
-                    {
+                //
+                // display the menu
+                //
+                ConsoleUtil.DisplayMessage("Please type the number of your menu choice.");
+                ConsoleUtil.DisplayMessage("");
+                Console.Write(
+                    "\t" + "1. Furry" + Environment.NewLine +
+                    "\t" + "2. Spotted" + Environment.NewLine +
+                    "\t" + "3. Dancing" + Environment.NewLine);
+
+                //
+                // get and process the user's response
+                // note: ReadKey argument set to "true" disables the echoing of the key press
+                //
+                ConsoleKeyInfo userResponse = Console.ReadKey(true);
+                switch (userResponse.KeyChar)
+                {
+                    case '1':
+                        productType = Product.ProductType.Furry;
                         usingMenu = false;
-                    }
-                    break;
+                        break;
+                    case '2':
+                        productType = Product.ProductType.Spotted;
+                        usingMenu = false;
+                        break;
+                    case '3':
+                        productType = Product.ProductType.Dancing;
+                        usingMenu = false;
+                        break;
+                    default:
+                        ConsoleUtil.DisplayMessage(
+                            "It appears you have selected an incorrect choice." + Environment.NewLine +
+                            "Press any key to continue.");
+
+                        userResponse = Console.ReadKey(true);
+                        if (userResponse.Key == ConsoleKey.Escape)
+                        {
+                            usingMenu = false;
+                        }
+                        break;
+                }
+                product.Type = productType;
             }
-    
+            Console.Clear();
+
+            if (!string.IsNullOrEmpty(product.Type.ToString()))
+            product.Cost = ConsoleValidator.TestForDouble(maxAttempts, $"{product.Type} Product Cost:", out maxAttemptsExceeded);
+
             Console.CursorVisible = true;
-            return productType;
+
+            return product;
         }
 
         /// <summary>
@@ -280,17 +339,10 @@ namespace TheSalesTracker
                 //
                 ConsoleUtil.DisplayMessage("Please type the number of your menu choice.");
                 ConsoleUtil.DisplayMessage("");
-                //Console.Write(
-                //    "\t" + "1. Travel" + Environment.NewLine +
-                //    "\t" + "2. Buy" + Environment.NewLine +
-                //    "\t" + "3. Sell" + Environment.NewLine +
-                //    "\t" + "4. Display Inventory" + Environment.NewLine +
-                //    "\t" + "5. Display Cities" + Environment.NewLine +
-                //    "\t" + "6. Display Account Info" + Environment.NewLine +
-                //    "\t" + "E. Exit" + Environment.NewLine);
 
                 Console.Write(
-                 "\t" + "1. Create an account" + Environment.NewLine +
+                 "\t" + "0. Create an account" + Environment.NewLine +
+                 "\t" + "1. Select a product" + Environment.NewLine +
                  "\t" + "2. Travel" + Environment.NewLine +
                  "\t" + "3. Buy" + Environment.NewLine +
                  "\t" + "4. Sell" + Environment.NewLine +
@@ -309,8 +361,12 @@ namespace TheSalesTracker
                 ConsoleKeyInfo userResponse = Console.ReadKey(true);
                 switch (userResponse.KeyChar)
                 {
-                    case '1':
+                    case '0':
                         userMenuChoice = MenuOption.SetupAccount;
+                        usingMenu = false;
+                        break;
+                    case '1':
+                        userMenuChoice = MenuOption.SetupProduct;
                         usingMenu = false;
                         break;
                     case '2':
@@ -458,6 +514,8 @@ namespace TheSalesTracker
 
             ConsoleUtil.DisplayMessage("Product type: " + product.Type.ToString());
             ConsoleUtil.DisplayMessage("Number of units: " + product.NumberOfUnits.ToString());
+            ConsoleUtil.DisplayMessage("Cost per unit: " + product.Cost.ToString());
+            ConsoleUtil.DisplayMessage("Total cost of units: $" + (product.NumberOfUnits * product.Cost).ToString("0.00"));
             ConsoleUtil.DisplayMessage("");
 
             DisplayContinuePrompt();
@@ -560,6 +618,8 @@ namespace TheSalesTracker
         /// <summary>
         /// display confirmation that a salesperson account was successfully loaded
         /// </summary>
+        /// <param name="maxAttemptsExceeded"></param>
+        /// <returns>bool</returns>
         public bool DisplayLoadAccountInfo(out bool maxAttemptsExceeded)
         {
             string userResponse;
@@ -626,8 +686,8 @@ namespace TheSalesTracker
         /// changes string to lowercase with first letter response
         /// adapted from: https://www.dotnetperls.com/uppercase-first-letter
         /// </summary>
-        /// <param_name="s"></param_name>
-        /// <returns></returns>
+        /// <param name="s"></param>
+        /// <returns>string</returns>
         static string UppercaseFirst(string s)
         {
             // Check for empty string.

@@ -10,7 +10,6 @@ namespace TheSalesTracker
     /// <summary>
     /// console utility class
     /// This class provided by John Velis, NMC Instructor
-    /// Adapted to include overloaded methods for right-padding text 
     /// </summary>
     public static class ConsoleUtil
     {
@@ -27,7 +26,7 @@ namespace TheSalesTracker
         private static ConsoleColor _headerBackgroundColor = ConsoleColor.White;
         private static ConsoleColor _headerForegroundColor = ConsoleColor.Red;
 
-        private static ConsoleColor _bodyBackgroundColor = ConsoleColor.Black;
+        private static ConsoleColor _bodyBackgroundColor = ConsoleColor.DarkBlue;
         private static ConsoleColor _bodyForegroundColor = ConsoleColor.White;
 
         private static string _windowTitle = " - set window title - ";
@@ -37,67 +36,99 @@ namespace TheSalesTracker
         #endregion
 
         #region PROPERTIES
-
+        /// <summary>
+        /// width of the display window
+        /// </summary>
         public static int WindowWidth
         {
             get { return _windowWidth; }
             set { _windowWidth = value; }
         }
 
+        /// <summary>
+        /// height of the display
+        /// </summary>
         public static int WindowHeight
         {
             get { return _windowHeight; }
             set { _windowHeight = value; }
         }
         
+        /// <summary>
+        /// left margin of the display window
+        /// </summary>
         public static int WindowLeft
         {
             get { return _windowLeft; }
             set { _windowLeft = value; }
         }
 
+        /// <summary>
+        /// top margin of the display window
+        /// </summary>
         public static int WindowTop
         {
             get { return _windowTop; }
             set { _windowTop = value; }
         }
 
+        /// <summary>
+        /// text to display in the header region of the window
+        /// </summary>
         public static string HeaderText
         {
             get { return _headerText; }
             set { _headerText = value; }
         }
         
+        /// <summary>
+        /// background color of the header region of the window
+        /// </summary>
         public static ConsoleColor HeaderBackgroundColor
         {
             get { return _headerBackgroundColor = ConsoleColor.White; }
             set { _headerBackgroundColor = value; }
         }
 
+        /// <summary>
+        /// font color of the header region of the window
+        /// </summary>
         public static ConsoleColor HeaderForegroundColor
         {
             get { return _headerForegroundColor = ConsoleColor.Red; }
             set { _headerForegroundColor = value; }
         }
 
+        /// <summary>
+        /// background color of the display window
+        /// </summary>
         public static ConsoleColor BodyBackgroundColor
         {
             get { return _bodyBackgroundColor = ConsoleColor.White; }
             set { _bodyBackgroundColor = value; }
         }
 
+        /// <summary>
+        /// font color of the display window
+        /// </summary>
         public static ConsoleColor BodyForegroundColor
         {
             get { return _bodyForegroundColor = ConsoleColor.Red; }
             set { _bodyForegroundColor = value; }
         }
         
+        /// <summary>
+        /// text to display in the title bar
+        /// </summary>
         public static string WindowTitle
         {
             get { return _windowTitle; }
             set { _windowTitle = value; }
         }
 
+        /// <summary>
+        /// the margin between the header and the console regions of the window
+        /// </summary>
         public static int DisplayHorizontalMargin
         {
             get { return _displayHorizontalMargin = 3; }
@@ -166,38 +197,6 @@ namespace TheSalesTracker
             }
         }
 
-        public static void DisplayMessage(string message, int padR)
-        {
-            //
-            // calculate the message area location on the console window
-            //
-            int messageBoxTextLength = _windowWidth - (2 * _displayHorizontalMargin + padR);
-            int messageBoxHorizontalMargin = _displayHorizontalMargin;
-
-            // message is not an empty line, display text
-            if (message != "")
-            {
-                //
-                // create a list of strings to hold the wrapped text message
-                //
-                List<string> messageLines;
-
-                //
-                // call utility method to wrap text and loop through list of strings to display
-                //
-                messageLines = Wrap(message, messageBoxTextLength, messageBoxHorizontalMargin);
-                foreach (var messageLine in messageLines)
-                {
-                    Console.WriteLine(messageLine); //.PadRight(messageLine.Length + padR));
-                }
-            }
-            // display an empty line
-            else
-            {
-                Console.WriteLine();
-            }
-        }
-
         /// <summary>
         /// display a message in the message area without a new line for the prompt
         /// </summary>
@@ -223,32 +222,6 @@ namespace TheSalesTracker
             for (int lineNumber = 0; lineNumber < messageLines.Count() - 1; lineNumber++)
             {
                 ConsoleUtil.DisplayMessage(messageLines[lineNumber]);
-            }
-
-            Console.Write(messageLines[messageLines.Count() - 1]);
-        }
-
-        public static void DisplayPromptMessage(string message, int padR)
-        {
-            //
-            // calculate the message area location on the console window
-            //
-            int messageBoxTextLength = _windowWidth - (2 * _displayHorizontalMargin);
-            int messageBoxHorizontalMargin = _displayHorizontalMargin;
-
-            //
-            // create a list of strings to hold the wrapped text message
-            //
-            List<string> messageLines;
-
-            //
-            // call utility method to wrap text and loop through list of strings to display
-            //
-            messageLines = Wrap(message, messageBoxTextLength, messageBoxHorizontalMargin);
-
-            for (int lineNumber = 0; lineNumber < messageLines.Count() - 1; lineNumber++)
-            {
-                ConsoleUtil.DisplayMessage(messageLines[lineNumber], padR);
             }
 
             Console.Write(messageLines[messageLines.Count() - 1]);
@@ -300,7 +273,6 @@ namespace TheSalesTracker
         /// Note: the method currently assumes the text will fit on one line
         /// </summary>
         /// <param name="text">text to center</param>
-        /// <param name="windowWidth">the width of the window in characters</param>
         /// <returns>string with spaces and centered text</returns>
         public static string Center(string text)
         {
@@ -332,13 +304,6 @@ namespace TheSalesTracker
             //newStr = Regex.Replace(newStr, "(?<=[A-Za-z])(?=[^A-Za-z])", " ");
 
             return newStr;
-        }
-
-        public static string RightSpace(string text)
-        {
-            int len = text.Length + 2;
-            string formattedText = text.PadRight(len);
-            return formattedText;
         }
     }
 }

@@ -9,11 +9,15 @@ namespace TheSalesTracker
     /// <summary>
     /// Data connection class, XML
     /// </summary>
-    class InitializeDataFileXml
+    public class InitializeDataFileXml
     {
         #region METHODS
 
-        private Salesperson InitializeSalesperson()
+        /// <summary>
+        /// create a dummy Salesperson 
+        /// </summary>
+        /// <returns>Salesperson</returns>
+        private static Salesperson InitializeSalesperson()
         {
             Salesperson salesperson = new Salesperson()
             {
@@ -31,7 +35,10 @@ namespace TheSalesTracker
             return salesperson;
         }
 
-        public void seedDataFile()
+        /// <summary> 
+        /// save a dummy Salesperson to the persistent data file
+        /// </summary>
+        public static void SeedDataFile()
         {
             XmlServices xmlService = new XmlServices(DataSettings.dataFilePathXml);
 

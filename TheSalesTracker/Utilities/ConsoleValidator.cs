@@ -21,7 +21,7 @@ namespace TheSalesTracker
         /// <param name="maxValue">inclusive maximum value</param>
         /// <param name="maxAttempts">maximum number of attempts</param>
         /// <param name="pluralName">plural name of item</param>
-        /// <param name="validInput">indicates valid user input</param>
+        /// <param name="userInteger">return integer</param>
         /// <returns></returns>
         public static bool TryGetIntegerFromUser(int minValue, int maxValue, int maxAttempts, string pluralName, out int userInteger)
         {
@@ -113,7 +113,7 @@ namespace TheSalesTracker
         /// </summary>
         /// <param name="maxAttempts">maximum number of attempts</param>
         /// <param name="userPrompt">user prompt</param>
-        /// <param name="validInput">indicates valid user input</param>
+        /// <param name="maxAttemptsExceeded">indicates whether maximum number of attempts has been reached</param>
         /// <returns></returns>
         public static string GetYesNoFromUser(int maxAttempts, string userPrompt, out bool maxAttemptsExceeded)
         {
@@ -125,13 +125,13 @@ namespace TheSalesTracker
             while (!validInput && !maxAttemptsExceeded)
             {
                 Console.Write($"{userPrompt} [Yes / No] ");
-                userResponse = Console.ReadLine();
+                userResponse = Console.ReadLine().ToUpper();
                 ConsoleUtil.DisplayMessage("");
 
                 //
                 // input is valid
                 //
-                if (userResponse.ToUpper() == "YES" || userResponse.ToUpper() == "NO")
+                if (userResponse == "YES" || userResponse.ToUpper() == "NO")
                 {
                     validInput = true;
                 }
@@ -171,13 +171,135 @@ namespace TheSalesTracker
             return userResponse;
         }
 
+        /// <summary>
+        /// helper method to get a valid string response from the user
+        /// based on John Velis' GetYesNoFromUser method
+        /// </summary>
+        /// <param name="maxAttempts">maximum number of attempts</param>
+        /// <param name="userPrompt">user prompt</param>
+        /// <param name="maxAttemptsExceeded">indicates whether maximum number of attempts has been reached</param>
+        /// <returns></returns>
+        public static string TestForEmpty(int maxAttempts, string userPrompt, out bool maxAttemptsExceeded)
+        {
+            bool validInput = false;
+            maxAttemptsExceeded = false;
+            string userResponse = "";
+            int attempts = 1;
+
+            while (!validInput && !maxAttemptsExceeded)
+            {
+                //Console.Write(userPrompt);
+                ConsoleUtil.DisplayPromptMessage(userPrompt);
+                userResponse = Console.ReadLine();
+                ConsoleUtil.DisplayMessage("");
+
+                //
+                // input is valid
+                //
+                if (!string.IsNullOrEmpty(userResponse))
+                {
+                    validInput = true;
+                }
+                //
+                // input is invalid, but more attempts available
+                //
+                else
+                {
+                    //
+                    // more attempts available 
+                    //
+                    if (attempts < maxAttempts)
+                    {
+                        ConsoleUtil.DisplayMessage("Please enter a non-empty value.");
+                        ConsoleUtil.DisplayMessage("Press any key to try again.");
+                    }
+                    //
+                    // all attempts used
+                    //
+                    else
+                    {
+                        ConsoleUtil.DisplayMessage("It appears you have exceeded the maximum number of attempts allowed.");
+                        ConsoleUtil.DisplayMessage("Press any key to continue.");
+                        maxAttemptsExceeded = true;
+                    }
+
+                    Console.ReadKey();
+                    Console.Clear();
+                }
+
+                attempts++;
+            }
+
+            return userResponse;
+        }
+
+        /// <summary>
+        /// helper method to get a valid decimal response from the user
+        /// based on John Velis's GetYesNoFromUser method
+        /// </summary>
+        /// <param name="maxAttempts">maximum number of attempts</param>
+        /// <param name="userPrompt">user prompt</param>
+        /// <param name="maxAttemptsExceeded">indicates whether maximum number of attempts has been reached</param>
+        /// <returns>double</returns>
+        public static double TestForDouble(int maxAttempts, string userPrompt, out bool maxAttemptsExceeded)
+        {
+            bool validInput = false;
+            maxAttemptsExceeded = false;
+            double dub = 0.00;
+            string userResponse;
+            int attempts = 1;
+
+            while (!validInput && !maxAttemptsExceeded)
+            {
+                ConsoleUtil.DisplayPromptMessage(userPrompt);
+                userResponse = Console.ReadLine();
+                ConsoleUtil.DisplayMessage("");
+            
+                //
+                // input is valid
+                //
+                if (double.TryParse(userResponse, out dub))
+                {
+                   validInput = true;
+                }
+                else
+                {
+                    //
+                    // more attempts available 
+                    //
+                    if (attempts < maxAttempts)
+                    {
+                        ConsoleUtil.DisplayMessage("Please enter a monetary value without a currency symbol");
+                        ConsoleUtil.DisplayMessage("Press any key to try again.");
+                    }
+                    //
+                    // all attempts used
+                    //
+                    else
+                    {
+                        ConsoleUtil.DisplayMessage("It appears you have exceeded the maximum number of attempts allowed.");
+                        ConsoleUtil.DisplayMessage("Press any key to continue.");
+                        maxAttemptsExceeded = true;
+                    }
+
+                    Console.ReadKey();
+                    Console.Clear();
+                }
+
+                attempts++;
+            }
+
+            return dub;
+        }
+
+
 
         /// <summary>
         /// helper method to get a valid "Y" or "N" response from the user
         /// </summary>
         /// <param name="maxAttempts">maximum number of attempts</param>
         /// <param name="userPrompt">user prompt</param>
-        /// <param name="validInput">indicates valid user input</param>
+        /// <param name="maxAttemptsExceeded">indicates whether maximum number of attempts has been reached</param>
         /// <returns></returns>
         public static string GetYNFromUser(int maxAttempts, string userPrompt, out bool maxAttemptsExceeded)
         {
@@ -234,24 +356,5 @@ namespace TheSalesTracker
 
             return userResponse;
         }
-
-
-        /// <summary>
-        /// validate Y/N response
-        /// </summary>
-        //public static bool? ValidateYN(char response)
-        //{
-        //    //string result = "Invalid entry";
-
-        //    //bool result => "ny".Contains(LEFT(response.ToString().ToLower(), 1)) ?
-        //    //(response.ToString().ToLower() = "y") ? true : false : null;
-        //    string x = response.ToString().ToLower();
-        //    //if ("ny".Contains(response.ToString().ToLower()))
-        //    //{
-        //    //result = response.ToString().Replace("n", false)
-        //    result = ("ny".Contains(x) ? ((x = "y") ? true : false);)
-        //    //}
-        //    return result;
-        //}
     }
 }

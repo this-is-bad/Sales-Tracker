@@ -19,30 +19,45 @@ namespace TheSalesTracker
         
         #region PROPERTIES
 
+        /// <summary>
+        /// Salesperson first name
+        /// </summary>
         public string FirstName
         {
             get { return _firstName; }
             set { _firstName = value; }
         }
 
+        /// <summary>
+        /// Salesperson last name
+        /// </summary>
         public string LastName
         {
             get { return _lastName; }
             set { _lastName = value; }
         }
 
+        /// <summary>
+        /// Salesperson account ID
+        /// </summary>
         public string AccountID
         {
             get { return _accountID; }
             set { _accountID = value; }
         }
       
+        /// <summary>
+        /// Salesperson list of cities visited
+        /// </summary>
         public List<string> CitiesVisited
         {
             get { return _citiesVisited; }
             set { _citiesVisited = value; }
         }
 
+        /// <summary>
+        /// Salesperson product
+        /// </summary>
         public Product CurrentStock
         {
             get { return _currentStock; }
@@ -51,13 +66,21 @@ namespace TheSalesTracker
         #endregion
         
         #region CONSTRUCTORS
-
+        /// <summary>
+        /// default constructor for 
+        /// </summary>
         public Salesperson()
         {
-            _citiesVisited = new List<string>();
-            _currentStock = new Product();
+            //_citiesVisited = new List<string>();
+            //_currentStock = new Product();
         }
 
+        /// <summary>
+        /// overloaded constructor for Salesperson
+        /// </summary>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="acountID"></param>
         public Salesperson(string firstName, string lastName, string acountID)
         {
             _firstName = firstName;

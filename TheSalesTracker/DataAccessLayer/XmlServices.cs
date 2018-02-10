@@ -8,6 +8,9 @@ using System.Xml.Serialization;
 
 namespace TheSalesTracker
 {
+    /// <summary>
+    /// class for managing read/write operations to a persistent data file
+    /// </summary>
     class XmlServices
     {
         #region FIELDS
@@ -26,7 +29,10 @@ namespace TheSalesTracker
         #endregion
 
         #region METHODS
-
+        /// <summary>
+        /// retrieve a Salesperson from the persistent data file
+        /// </summary>
+        /// <returns>Salesperson</returns>
         public Salesperson ReadSalespersonFromDataFile()
         {
             Salesperson salesperson = new Salesperson();
@@ -47,15 +53,26 @@ namespace TheSalesTracker
             return salesperson;
         }
 
-        public void WriteSalespersonToDataFile(Salesperson salespesron)
+        /// <summary>
+        /// save a Salesperson to the persistent data file
+        /// </summary>
+        /// <param name="salesperson"></param>
+        public void WriteSalespersonToDataFile(Salesperson salesperson)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(Salesperson), new XmlRootAttribute("Salesperson"));
-
-            StreamWriter sWriter = new StreamWriter(_dataFilePath);
-
-            using (sWriter)
+            if (salesperson.FirstName == null & salesperson.LastName == null)
             {
-                serializer.Serialize(sWriter, salespesron);
+                InitializeDataFileXml.SeedDataFile();
+            }
+            else
+            {
+                XmlSerializer serializer = new XmlSerializer(typeof(Salesperson), new XmlRootAttribute("Salesperson"));
+
+                StreamWriter sWriter = new StreamWriter(_dataFilePath);
+
+                using (sWriter)
+                {
+                    serializer.Serialize(sWriter, salesperson);
+                }
             }
         }
 

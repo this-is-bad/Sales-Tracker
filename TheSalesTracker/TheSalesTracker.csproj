@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Debug\TheSalesTracker.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -44,12 +45,8 @@
   <ItemGroup>
     <Compile Include="Controllers\Controller.cs" />
     <Compile Include="DataAccessLayer\XmlServices.cs" />
-    <Compile Include="DataAccessLayer\CsvServices.cs" />
-    <Compile Include="Data\InitializeDataFile.cs" />
     <Compile Include="Data\InitializeDataFileXml.cs" />
-    <Compile Include="Data\InitializeDataFileCsv.cs" />
     <Compile Include="Data\DataSettings.cs" />
-    <Compile Include="Models\class_template.cs" />
     <Compile Include="Models\MenuOption.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\Salesperson.cs" />
@@ -64,7 +61,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Content Include="Data\Data.xml" />
+    <Content Include="Data\Data.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="readme.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
