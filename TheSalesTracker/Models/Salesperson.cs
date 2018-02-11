@@ -71,8 +71,8 @@ namespace TheSalesTracker
         /// </summary>
         public Salesperson()
         {
-            //_citiesVisited = new List<string>();
-            //_currentStock = new Product();
+            _citiesVisited = new List<string>();
+            _currentStock = new Product();
         }
 
         /// <summary>
@@ -88,10 +88,45 @@ namespace TheSalesTracker
             _accountID = acountID;
 
             _citiesVisited = new List<string>();
+            _currentStock = new Product();
+        }
+
+        /// <summary>
+        /// overloaded constructor for Salesperson
+        /// </summary>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="acountID"></param>
+        /// <param name="citiesVisited"></param>
+        public Salesperson(string firstName, string lastName, string acountID, List<string> citiesVisited)
+        {
+            _firstName = firstName;
+            _lastName = lastName;
+            _accountID = acountID;
+
+            _citiesVisited = citiesVisited;
+            _currentStock = new Product();
+        }
+
+        /// <summary>
+        /// overloaded constructor for Salesperson
+        /// </summary>
+        /// <param name="firstName"></param>
+        /// <param name="lastName"></param>
+        /// <param name="acountID"></param>
+        /// <param name="citiesVisited"></param>
+        /// <param name="currentStock"></param>
+        public Salesperson(string firstName, string lastName, string acountID, List<string> citiesVisited, Product currentStock)
+        {
+            _firstName = firstName;
+            _lastName = lastName;
+            _accountID = acountID;
+            _citiesVisited = citiesVisited;
+            _currentStock = currentStock;
         }
 
         #endregion
-        
+
         #region METHODS
 
 

@@ -222,7 +222,7 @@ namespace TheSalesTracker
         /// <summary>
         /// display a list of product types and return the selected product with cost
         /// </summary>
-        public Product DisplayProductUserSelection()
+        public void DisplayProductUserSelection(Salesperson salesperson)
         {
             bool usingMenu = true;
             int maxAttempts = 3;
@@ -298,8 +298,8 @@ namespace TheSalesTracker
             product.Cost = ConsoleValidator.TestForDouble(maxAttempts, $"{product.Type} Product Cost:", out maxAttemptsExceeded);
 
             Console.CursorVisible = true;
-
-            return product;
+            salesperson.CurrentStock = product;
+            //return product;
         }
 
         /// <summary>
@@ -482,26 +482,35 @@ namespace TheSalesTracker
             ConsoleUtil.HeaderText = "Sell Inventory";
             ConsoleUtil.DisplayReset();
 
-            //
-            // get number of units to buy
-            //
-            ConsoleUtil.DisplayMessage("Selling " + product.Type.ToString() + " products.");
-            ConsoleUtil.DisplayMessage("");
-
-            if (!ConsoleValidator.TryGetIntegerFromUser(MINIMUM_BUYSELL_AMOUNT, MAXIMUM_BUYSELL_AMOUNT, MAXIMUM_ATTEMPTS, "products", out int numberOfUnitsToSell))
+            if (product == null)
             {
-                ConsoleUtil.DisplayMessage("It appears you are having difficulty setting the number of products to sell.");
-                ConsoleUtil.DisplayMessage("By default, the number of products to sell will be set to zero.");
-                numberOfUnitsToSell = 0;
+                ConsoleUtil.DisplayMessage("No product has been selected");
                 DisplayContinuePrompt();
+                return 0;
             }
-            ConsoleUtil.DisplayReset();
+            else
+            {
+                //
+                // get number of units to buy
+                //
+                ConsoleUtil.DisplayMessage("Selling " + product.Type.ToString() + " products.");
+                ConsoleUtil.DisplayMessage("");
 
-            ConsoleUtil.DisplayMessage(numberOfUnitsToSell + " " + product.Type.ToString() + " products have been subtracted from the Inventory.");
+                if (!ConsoleValidator.TryGetIntegerFromUser(MINIMUM_BUYSELL_AMOUNT, MAXIMUM_BUYSELL_AMOUNT, MAXIMUM_ATTEMPTS, "products", out int numberOfUnitsToSell))
+                {
+                    ConsoleUtil.DisplayMessage("It appears you are having difficulty setting the number of products to sell.");
+                    ConsoleUtil.DisplayMessage("By default, the number of products to sell will be set to zero.");
+                    numberOfUnitsToSell = 0;
+                    DisplayContinuePrompt();
+                }
+                ConsoleUtil.DisplayReset();
 
-            DisplayContinuePrompt();
+                ConsoleUtil.DisplayMessage(numberOfUnitsToSell + " " + product.Type.ToString() + " products have been subtracted from the Inventory.");
 
-            return numberOfUnitsToSell;
+                DisplayContinuePrompt();
+
+                return numberOfUnitsToSell;
+            }
         }
 
         /// <summary>
@@ -511,7 +520,7 @@ namespace TheSalesTracker
         {
             ConsoleUtil.HeaderText = "Current Inventory";
             ConsoleUtil.DisplayReset();
-
+           // if(product)
             ConsoleUtil.DisplayMessage("Product type: " + product.Type.ToString());
             ConsoleUtil.DisplayMessage("Number of units: " + product.NumberOfUnits.ToString());
             ConsoleUtil.DisplayMessage("Cost per unit: " + product.Cost.ToString());
@@ -697,6 +706,19 @@ namespace TheSalesTracker
             }
             // Return char and concatenation substring.
             return char.ToUpper(s[0]) + s.Substring(1).ToLower();
+        }
+
+        /// <summary>
+        /// display an error message when an object is null
+        /// </summary>
+        public void DisplayObjectError(string objectName)
+        {
+            ConsoleUtil.HeaderText = "Error";
+            ConsoleUtil.DisplayReset();
+
+            ConsoleUtil.DisplayMessage($"No {objectName} has been selected");
+
+            DisplayContinuePrompt();
         }
 
         #endregion

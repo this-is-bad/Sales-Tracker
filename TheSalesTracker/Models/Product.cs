@@ -15,8 +15,8 @@ namespace TheSalesTracker
 
         private int _numberOfUnits;
         private bool _onBackorder;
-        private ProductType _type;
         private double _cost;
+        private ProductType _type;
 
         #endregion
 
@@ -27,6 +27,7 @@ namespace TheSalesTracker
         public int NumberOfUnits
         {
             get { return _numberOfUnits; } 
+            set { _numberOfUnits = value; }
         }
 
         /// <summary>
@@ -47,6 +48,16 @@ namespace TheSalesTracker
             set { _type = value; }
         }
 
+
+        /// <summary>
+        /// the product cost
+        /// </summary>
+        public double Cost
+        {
+            get { return _cost; }
+            set { _cost = value; }
+        }
+
         /// <summary>
         /// the defined list of available product types
         /// </summary>
@@ -62,14 +73,6 @@ namespace TheSalesTracker
             Dancing
         }
 
-        /// <summary>
-        /// the product cost
-        /// </summary>
-        public double Cost
-        {
-            get { return _cost; }
-            set { _cost = value; }
-        }
         #endregion
 
         #region CONSTRUCTORS

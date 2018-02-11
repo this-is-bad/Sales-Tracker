@@ -175,8 +175,7 @@ namespace TheSalesTracker
         /// </summary>
         private void SetupProduct()
         {
-            Product product = _consoleView.DisplayProductUserSelection();
-            _salesperson.CurrentStock = product;
+            _consoleView.DisplayProductUserSelection(_salesperson);
         }
 
         /// <summary>
@@ -193,12 +192,19 @@ namespace TheSalesTracker
         /// </summary>
         private void Sell()        
         {
-            int numberOfUnits = _consoleView.DisplayGetNumberOfUnitsToSell(_salesperson.CurrentStock);
-            _salesperson.CurrentStock.SubtractProducts(numberOfUnits);
-
-            if (_salesperson.CurrentStock.OnBackorder)
+            if (_salesperson.CurrentStock != null)
             {
-                _consoleView.DisplayBackOrderNotification(_salesperson.CurrentStock, numberOfUnits);
+                int numberOfUnits = _consoleView.DisplayGetNumberOfUnitsToSell(_salesperson.CurrentStock);
+                _salesperson.CurrentStock.SubtractProducts(numberOfUnits);
+
+                if (_salesperson.CurrentStock.OnBackorder)
+                {
+                    _consoleView.DisplayBackOrderNotification(_salesperson.CurrentStock, numberOfUnits);
+                }
+            }
+            else
+            {
+                _consoleView.DisplayObjectError("product");
             }
         }
 
